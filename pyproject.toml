@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "semantic-search"
+version = "0.1.0"
+description = "Local document search with replaceable importers, chunkers, embedders and storage"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn>=0.30,<1",
+  "qdrant-client>=1.12,<2",
+  "sentence-transformers>=3.3,<6",
+  "markdown-it-py>=3,<5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "httpx>=0.27,<1", "ruff>=0.9,<1"]
+
+[project.scripts]
+semantic-search = "semantic_search.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/semantic_search"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

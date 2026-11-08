@@ -1,0 +1,38 @@
+[embedding]
+model = "intfloat/multilingual-e5-small"
+query_prefix = "query: "
+document_prefix = "passage: "
+device = "cpu"
+batch_size = 8
+threads = 4
+cache_folder = ".models"
+# revision = "commit hash from Hugging Face"
+
+[database]
+collection = "documents_e5_small_v1"
+# Embedded Qdrant works without Docker. Only one application process may open this path.
+path = ".data/qdrant"
+# To use a separate Qdrant server, remove path and set url:
+# url = "http://127.0.0.1:6333"
+
+[server]
+host = "127.0.0.1"
+port = 8000
+
+[indexing]
+workers = 2
+
+[[sources]]
+path = "examples/documents"
+extensions = [".md", ".txt"]
+chunker = "markdown"
+max_tokens = 320
+overlap_tokens = 32
+
+# Each directory can have its own chunker and limits.
+# [[sources]]
+# path = 'C:\Users\TED\Documents\Obsidian Vault'
+# extensions = [".md"]
+# chunker = "markdown"
+# max_tokens = 384
+# overlap_tokens = 32
